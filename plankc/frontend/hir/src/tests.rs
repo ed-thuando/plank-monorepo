@@ -3,13 +3,14 @@ use plank_session::Session;
 use plank_source::ParsedProject;
 use plank_test_utils::{TestProject, dedent_preserve_blank_lines};
 use plank_values::ValueInterner;
+use std::path::PathBuf;
 
 fn try_lower(source: &str) -> (Hir, ValueInterner, Session, ParsedProject) {
     try_lower_project(TestProject::root(source))
 }
 
 fn try_lower_project(project: TestProject) -> (Hir, ValueInterner, Session, ParsedProject) {
-    let mut session = Session::new();
+    let mut session = Session::new(PathBuf::new());
     let project = project.build(&mut session);
 
     let mut big_nums = ValueInterner::new();
